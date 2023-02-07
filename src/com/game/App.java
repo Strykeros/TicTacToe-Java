@@ -62,17 +62,6 @@ public class App {
 
         game.setVisible(true);
 
-
-        /*mainTimer = new Timer(100, e -> {
-            try {
-                syncData(db, newApp, menu, winner, grid, turn, gameId);
-
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-        mainTimer.start();*/
-
         Thread mainThread = new Thread(() -> {
             try {
 
@@ -90,6 +79,7 @@ public class App {
 
     }
 
+    // Synchronise the grid, turn, winner from the database
     public static void syncData(Database database, JPanel appPanel, SideMenu menu, CheckWinner winner, Grid grid, PlayerTurn turn, int currentGameId) throws SQLException {
 
         Component[] childs = appPanel.getComponents();
@@ -171,6 +161,7 @@ public class App {
 
     }
 
+    // Get and set the player alias from the user input
     private static void setPlayerName(JPanel appPanel) throws SQLException {
 
         final int nameLength = 4;

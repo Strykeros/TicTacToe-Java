@@ -26,6 +26,7 @@ public class CheckWinner {
         playerName = player;
     }
 
+    // Check for the winner on each turn
     public String checkForWin() throws SQLException {
         HashMap<String, String> btns = new HashMap<>();
         Component[] childs = mainPanel.getComponents();
@@ -65,6 +66,7 @@ public class CheckWinner {
         return null;
     }
 
+    // Check for draw on each turn
     public String checkForDraw() throws SQLException {
         HashMap<String, String> btns = new HashMap<>();
         Component[] childs = mainPanel.getComponents();
@@ -90,6 +92,7 @@ public class CheckWinner {
 
     }
 
+    // Insert the winner or "draw" in the database
     private void insertData(String gameStatus) throws SQLException {
         Matchmaking matchmaking = new Matchmaking(mainPanel, playerName);
         int currentGameId = matchmaking.getGameId();

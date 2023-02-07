@@ -22,6 +22,7 @@ public class Matchmaking {
         playerName = player;
     }
 
+    // Starts a timer that searches for an opponent for the player
     public void searchOpponent(){
         SideMenu menu = new SideMenu(mainPanel);
         Grid grid = new Grid(mainPanel, playerName);
@@ -53,6 +54,7 @@ public class Matchmaking {
         matchmakingTimer.start();
     }
 
+    // Sets the player name from user input in the database
     public void updatePlayer(String name) throws SQLException {
         Grid grid = new Grid(mainPanel, name);
 
@@ -103,27 +105,14 @@ public class Matchmaking {
 
     }
 
+    // Gets and returns the current game's opponent waiting status from the database
     private boolean getWaitingStatus() throws SQLException {
         HashMap<String, List<String>> playerData = db.getPlayerData();
-
-        /*ArrayList<String> playerValuesArr = new ArrayList<>();
-
-        for (String key : playerData.keySet()){
-            playerValuesArr.add(key + " " + playerData.get(key).toString().replace("[", "").replace("]", "").replace(",", ""));
-        }
-
-        String arrayValue = playerValuesArr.get(playerValuesArr.size()-1);
-
-        String[] array = arrayValue.split(" ");
-
-        return array[4];*/
 
         ArrayList<String> dbValues = new ArrayList<>();
         Object[] keys = playerData.keySet().toArray();
 
         for (int j = 0; j < keys.length; j++){
-            /*List<String> innerList = playerData.get(keys[j]);
-            System.out.println(playerData);*/
             int dbGameId = Integer.parseInt((String) keys[j]);
 
             if(gameId == dbGameId){
@@ -132,12 +121,12 @@ public class Matchmaking {
             }
         }
 
-
         String arrayValue = dbValues.get(dbValues.size()-1);
         String[] array = arrayValue.split(" ");
         return Boolean.parseBoolean(array[3]);
     }
 
+    // Gets and returns the current game's ID from the database
     private void fetchGameId() throws SQLException {
         HashMap<String, List<String>> playerData = db.getPlayerData();
 
@@ -165,6 +154,7 @@ public class Matchmaking {
         }
     }
 
+    // Returns current game's id
     public int getGameId(){
         return gameId;
     }

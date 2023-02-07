@@ -11,6 +11,7 @@ public class Database {
     private static final String turnTblName = "turns";
     private static final String gameTblName = "games";
 
+    // Connect to the Database
     public void connectToDB(){
         try {
             conn = DriverManager.getConnection("jdbc:sqlite:src/databases/game_data.db");
@@ -25,8 +26,9 @@ public class Database {
         }
     }
 
+    // Create a "turns" table in the database if it doesn't exist yet.
     private void createTurnTable(Connection conn) throws SQLException {
-        String createTable = "" + "CREATE TABLE IF NOT EXISTS " + turnTblName + " " +
+        String createTable = "" + "CREATE TABLE IF NOT EXISTS turns " +
                 "( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "game_id INTEGER NOT NULL, "+
@@ -40,8 +42,9 @@ public class Database {
         statement.execute(createTable);
     }
 
+    // Create a "games" table in the database if it doesn't exist yet.
     private void createPlayerTable(Connection conn) throws SQLException {
-        String createTable = "" + "CREATE TABLE IF NOT EXISTS " + gameTblName + " " +
+        String createTable = "" + "CREATE TABLE IF NOT EXISTS games " +
                 "( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "player_x TEXT, " +
@@ -55,6 +58,7 @@ public class Database {
         statement.execute(createTable);
     }
 
+    // Insert data into the "turns" table in the database.
     public void insertGameTurns(String gameId, String clickedBtnName, String btnValue, String nextTurn) throws SQLException{
         String insertData = " INSERT INTO turns (game_id, clicked_btn, btn_value, next_turn) VALUES(?, ?, ?, ?)";
         PreparedStatement prepState = conn.prepareStatement(insertData);
@@ -65,9 +69,10 @@ public class Database {
         prepState.executeUpdate();
     }
 
+    // Retrieve data from the "turns" table in the database and return a HashMap.
     public HashMap<String, List<String>> getGameTurns() throws SQLException {
         HashMap<String, List<String>> gameData = new HashMap<String, List<String>>();
-        String selectData = "SELECT * FROM " + turnTblName;
+        String selectData = "SELECT * FROM turns";
         Statement statement = conn.createStatement();
         ResultSet results = statement.executeQuery(selectData);
 
@@ -88,6 +93,7 @@ public class Database {
         }
     }
 
+    // Retrieve data from the "games" table in the database and return a HashMap.
     public HashMap<String, List<String>> getPlayerData() throws SQLException{
 
         HashMap<String, List<String>> playerData = new HashMap<String, List<String>>();
@@ -115,6 +121,7 @@ public class Database {
 
     }
 
+    // Insert data in the "games" table.
     public void insertPlayerData(String playerX, String playerO, String winner, String waitingOpponent) throws SQLException{
         String insertData = " INSERT INTO games (player_x, player_o, winner, waiting_opponent) VALUES(?, ?, ?, ?)";
 
@@ -128,6 +135,7 @@ public class Database {
 
     }
 
+    // Update data in the "games" table.
     public void updatePlayerData(int id, String player_x, String player_o, String winner, String waiting_opponent) throws SQLException{
         String updateData = " UPDATE games SET player_x = ?, player_o = ?, winner = ?, waiting_opponent = ? WHERE id = ?";
 

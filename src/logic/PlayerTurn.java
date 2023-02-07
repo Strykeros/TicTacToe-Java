@@ -14,6 +14,7 @@ public class PlayerTurn {
         this.player = playerName;
     }
 
+    // Gets the saved turn from the database by game id and returns it
     public String checkTurn() throws SQLException {
 
         HashMap<String, List<String>> gameData = db.getGameTurns();
@@ -51,6 +52,8 @@ public class PlayerTurn {
 
     }
 
+    // Gets the saved turn from the database by game id,
+    // and returns "O" if the last turn was "X", otherwise, returns "X".
     public String getNextTurn() throws SQLException {
 
         String nextTurn;

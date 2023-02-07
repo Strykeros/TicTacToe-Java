@@ -28,6 +28,7 @@ public class SideMenu {
 
     }
 
+    // Main function that initializes Label and leaderboard button
     public void initSidePanel(String player, int gameId) {
 
         currentGameId = gameId;
@@ -36,6 +37,7 @@ public class SideMenu {
         leaderboardBtn();
     }
 
+    // Create and add Label to the side panel
     private void playerTurnTxt() {
 
         GridBagConstraints constraints = new GridBagConstraints();
@@ -49,6 +51,7 @@ public class SideMenu {
 
     }
 
+    // Create and add leaderboard button to the side panel
     private void leaderboardBtn(){
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridy = 1;
@@ -71,6 +74,7 @@ public class SideMenu {
         mainPanel.add(leaderboardBtn, constraints);
     }
 
+    // Update Label text based on the state of the game
     public void changeTxtValue(String player, boolean gameOver) throws SQLException {
 
 
@@ -85,7 +89,6 @@ public class SideMenu {
                 turnTxt.setText("The winner is " + playerName);
             }
 
-
         }
         else {
             if(Objects.equals(player, "X")){
@@ -97,7 +100,6 @@ public class SideMenu {
                     turnTxt.setText(playr + "'s turn");
                 }
 
-
             }else {
                 String playr = getUsername("X");
                 if(Objects.equals(playr, currentPlayer)){
@@ -106,13 +108,11 @@ public class SideMenu {
                     turnTxt.setText(playr + "'s turn");
                 }
             }
-
-
-
         }
 
     }
 
+    // Get username from database based on the "X" or "O" symbol
     public String getUsername(String player) throws SQLException {
         HashMap<String, List<String>> playerData = db.getPlayerData();
 
@@ -148,6 +148,7 @@ public class SideMenu {
         return null;
     }
 
+    // Change initial label text based on the player's turn
     public void changeInitialText(String user) throws SQLException {
 
         String playerX = getUsername("X");
@@ -161,6 +162,7 @@ public class SideMenu {
         }
     }
 
+    // Get a list of winners from the database
     private void getStats() throws SQLException {
 
         HashMap<String, List<String>> playerData = db.getPlayerData();
@@ -197,6 +199,7 @@ public class SideMenu {
 
     }
 
+    // Display the winners on the leaderboard
     private void showGameData(HashMap<String, Integer> winners){
         String[] columns = {"Place", "Player", "Wins"};
 

@@ -11,9 +11,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class Grid{
@@ -32,6 +29,7 @@ public class Grid{
         playerName = player;
     }
 
+    // Create the game grid with buttons
     public void createGrid(int gridRows, int  gridCols) {
         PlayerTurn playerTurn = new PlayerTurn(playerName, currentGameId);
         GridBagConstraints constraints = new GridBagConstraints();
@@ -61,6 +59,7 @@ public class Grid{
 
     }
 
+    // Add a click event for each game button
     private void addClickEvt(JButton btn, PlayerTurn turn, int matchId){
         btn.addActionListener(new ActionListener() {
             @Override
@@ -132,18 +131,23 @@ public class Grid{
         });
     }
 
+    // change "gameOver" boolean
     public void setGameOver(boolean status){
         this.gameOver = status;
     }
 
+    // return "gameOver" boolean value
     public boolean isGameOver(){
         return this.gameOver;
     }
 
+    // change "gridIsLocked" boolean
     public void setGridLock(boolean status){gridIsLocked = status;}
 
+    // return "gameOver" boolean value
     public boolean isGridLocked() {return gridIsLocked;}
 
+    // set "currentGameId" value
     public void setGameId(int gameId){currentGameId = gameId;}
 
 }
