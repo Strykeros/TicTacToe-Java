@@ -14,6 +14,7 @@ public class CheckWinner {
     private Database db = new Database();
     private SideMenu menu;
     private static String playerName;
+    private static boolean winnerExists = false;
 
     private static int[][] winCombos = {
             {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
@@ -59,6 +60,7 @@ public class CheckWinner {
                     !Objects.equals(btn2, "")  &&
                     !Objects.equals(btn3, "")){
                  insertData(btn1);
+                 winnerExists = true;
                  return btn1;
             }
 
@@ -82,7 +84,7 @@ public class CheckWinner {
 
         boolean gridIsFull = btns.containsValue("");
 
-        if(!gridIsFull){
+        if(!gridIsFull && !winnerExists){
             String status = "draw";
             insertData(status);
             return status;
