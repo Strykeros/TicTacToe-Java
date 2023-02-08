@@ -8,8 +8,6 @@ import java.util.List;
 public class Database {
 
     private static Connection conn =  null;
-    private static final String turnTblName = "turns";
-    private static final String gameTblName = "games";
 
     // Connect to the Database
     public void connectToDB(){
@@ -17,9 +15,6 @@ public class Database {
             conn = DriverManager.getConnection("jdbc:sqlite:src/databases/game_data.db");
             createTurnTable(conn);
             createPlayerTable(conn);
-            // Temporary DB cleanup
-            String[] tables = {turnTblName};
-            //deleteData(tables);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -147,17 +142,6 @@ public class Database {
         prepState.setInt(5, id);
 
         prepState.executeUpdate();
-
-    }
-
-    private void deleteData(String[] tables) throws SQLException {
-
-        for (String table : tables){
-            String delData = "DELETE FROM " + table;
-            Statement statement = conn.createStatement();
-            statement.executeUpdate(delData);
-        }
-
 
     }
 

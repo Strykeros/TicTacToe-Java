@@ -40,8 +40,10 @@ public class Grid{
         for (int i = 0; i < gridRows; i++){
             for (int j = 0; j < gridCols; j++){
                 JButton btn = new JButton();
-
+                Font font = new Font("Arial", Font.BOLD, 40);
+                btn.setFont(font);
                 addClickEvt(btn, playerTurn, gameId);
+
                 btn.setName("Button" + btnNum);
 
                 constraints.gridx = j;

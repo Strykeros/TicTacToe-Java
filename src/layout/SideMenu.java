@@ -42,6 +42,8 @@ public class SideMenu {
 
         GridBagConstraints constraints = new GridBagConstraints();
         turnTxt = new JLabel();
+        Font font = new Font("Arial", Font.BOLD, 18);
+        turnTxt.setFont(font);
 
         turnTxt.setText(startTxtVal);
         turnTxt.setSize(450, 40);
@@ -56,6 +58,8 @@ public class SideMenu {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridy = 1;
         leaderboardBtn = new JButton();
+        Font font = new Font("Arial", Font.BOLD, 18);
+        leaderboardBtn.setFont(font);
         leaderboardBtn.setText("Leaderboard");
         int marginSize = 30;
         constraints.insets = new Insets(marginSize, marginSize, marginSize, marginSize);

@@ -16,7 +16,6 @@ import java.util.List;
 
 public class App {
     private JPanel mainPanel;
-    public static Timer mainTimer;
     private static String playerName;
 
 
@@ -79,7 +78,7 @@ public class App {
 
     }
 
-    // Synchronise the grid, turn, winner from the database
+    // Synchronize the grid, turn, winner from the database
     public static void syncData(Database database, JPanel appPanel, SideMenu menu, CheckWinner winner, Grid grid, PlayerTurn turn, int currentGameId) throws SQLException {
 
         Component[] childs = appPanel.getComponents();
