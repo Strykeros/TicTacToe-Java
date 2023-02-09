@@ -80,7 +80,6 @@ public class SideMenu {
     // Update Label text based on the state of the game
     public void changeTxtValue(String player, boolean gameOver) throws SQLException {
 
-
         String playerName = getUsername(player);
 
         if(gameOver){
@@ -89,30 +88,56 @@ public class SideMenu {
                 turnTxt.setText("It's a draw!");
             }
             else {
-                turnTxt.setText("The winner is " + playerName);
+                displayPersonalizedWin(player, playerName);
             }
 
         }
         else {
-            if(Objects.equals(player, "X")){
-                String username = getUsername("O");
-
-                if(Objects.equals(username, currentPlayer)){
-                    turnTxt.setText("Your turn");
-                }else {
-                    turnTxt.setText(username + "'s turn");
-                }
-
-            }else {
-                String username = getUsername("X");
-                if(Objects.equals(username, currentPlayer)){
-                    turnTxt.setText("Your turn");
-                }else {
-                    turnTxt.setText(username + "'s turn");
-                }
-            }
+            displayPersonalizedTurn(player);
         }
 
+    }
+
+    // Set the winner text on side menu
+    private void displayPersonalizedWin(String player, String playerName) throws SQLException {
+        if(Objects.equals(player, "X")){
+            String username = getUsername("X");
+
+            if(Objects.equals(username, currentPlayer)){
+                turnTxt.setText("You Win!");
+            }else {
+                turnTxt.setText("The winner is " + playerName);
+            }
+
+        }else {
+            String username = getUsername("O");
+            if(Objects.equals(username, currentPlayer)){
+                turnTxt.setText("You Win!");
+            }else {
+                turnTxt.setText("The winner is " + playerName);
+            }
+        }
+    }
+
+    // Set the turn text on side menu
+    private void displayPersonalizedTurn(String player) throws SQLException {
+        if(Objects.equals(player, "X")){
+            String username = getUsername("O");
+
+            if(Objects.equals(username, currentPlayer)){
+                turnTxt.setText("Your turn");
+            }else {
+                turnTxt.setText(username + "'s turn");
+            }
+
+        }else {
+            String username = getUsername("X");
+            if(Objects.equals(username, currentPlayer)){
+                turnTxt.setText("Your turn");
+            }else {
+                turnTxt.setText(username + "'s turn");
+            }
+        }
     }
 
     // Get username from database based on the "X" or "O" symbol
