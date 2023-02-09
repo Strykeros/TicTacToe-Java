@@ -1,6 +1,5 @@
 package layout;
 
-import com.game.App;
 import logic.CheckWinner;
 import logic.Database;
 import logic.Matchmaking;
@@ -71,66 +70,113 @@ public class Grid{
 
                 if(Objects.equals(btn.getText(), "") && !gameOver && !gridIsLocked){
 
-                    String playerTurn = null;
-                    try {
-                        playerTurn = turn.checkTurn();
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    String nextTurn = null;
-                    try {
-                        nextTurn = turn.getNextTurn();
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    String playerTurn = checkTurnStatus(turn);
+                    String nextTurn = checkNextTurnStatus(turn);
+
                     btn.setText(playerTurn);
                     setGridLock(true);
                     mainPanel.repaint();
                     String win;
                     String draw;
-                    try {
-                        win = winner.checkForWin();
-                        draw = winner.checkForDraw();
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    }
 
-                    try {
-                        String matchIdStr = String.valueOf(matchId);
-                        db.insertGameTurns(matchIdStr, btn.getName(), playerTurn, nextTurn);
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
+                    win = getWinStatus(winner);
+                    draw = getDrawStatus(winner);
 
-                    if(win != null){
-                        gameOver = true;
-                        try {
-                            sideMenu.changeTxtValue(win, gameOver);
-                        } catch (SQLException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                    else if(draw != null && draw.equals("draw")){
-                        gameOver = true;
-                        try {
-                            sideMenu.changeTxtValue("draw", gameOver);
-                        } catch (SQLException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                    else {
-                        try {
-                            sideMenu.changeTxtValue(playerTurn, gameOver);
-                        } catch (SQLException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
+                    insertTurn(matchId, btn, playerTurn, nextTurn);
+
+                    checkForWinAndDraw(win, draw, playerTurn, sideMenu);
 
 
                 }
 
             }
         });
+    }
+
+    // returns the current turn for the game
+    private String checkTurnStatus(PlayerTurn turn){
+        String playerTurn;
+        try {
+            playerTurn = turn.checkTurn();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return playerTurn;
+    }
+
+    // returns the next turn for the game
+    private String checkNextTurnStatus(PlayerTurn turn){
+        String nextTurn;
+        try {
+            nextTurn = turn.getNextTurn();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return nextTurn;
+    }
+
+    // returns draw if exists
+    private String getDrawStatus(CheckWinner winner){
+        String draw;
+
+        try {
+            draw = winner.checkForDraw();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return draw;
+    }
+
+    // returns the winner if exists
+    private String getWinStatus(CheckWinner winner){
+        String win;
+        try {
+            win = winner.checkForWin();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return win;
+    }
+
+    // Checks for the winner and draw
+    private void checkForWinAndDraw(String win, String draw, String playerTurn, SideMenu sideMenu){
+        if(win != null){
+            gameOver = true;
+            try {
+                sideMenu.changeTxtValue(win, gameOver);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        else if(draw != null && draw.equals("draw")){
+            gameOver = true;
+            try {
+                sideMenu.changeTxtValue("draw", gameOver);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        else {
+            try {
+                sideMenu.changeTxtValue(playerTurn, gameOver);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
+    private void insertTurn(int matchId, JButton btn, String playerTurn, String nextTurn){
+        try {
+            String matchIdStr = String.valueOf(matchId);
+            db.insertGameTurns(matchIdStr, btn.getName(), playerTurn, nextTurn);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
     }
 
     // change "gameOver" boolean

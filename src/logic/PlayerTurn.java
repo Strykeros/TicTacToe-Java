@@ -1,6 +1,4 @@
 package logic;
-import layout.Grid;
-
 import java.sql.SQLException;
 import java.util.*;
 
