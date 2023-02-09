@@ -35,6 +35,7 @@ public class Database {
 
         Statement statement = conn.createStatement();
         statement.execute(createTable);
+        statement.close();
     }
 
     // Create a "games" table in the database if it doesn't exist yet.
@@ -51,6 +52,7 @@ public class Database {
 
         Statement statement = conn.createStatement();
         statement.execute(createTable);
+        statement.close();
     }
 
     // Insert data into the "turns" table in the database.
@@ -62,6 +64,7 @@ public class Database {
         prepState.setString(3, btnValue);
         prepState.setString(4, nextTurn);
         prepState.executeUpdate();
+        prepState.close();
     }
 
     // Retrieve data from the "turns" table in the database and return a HashMap.
@@ -80,6 +83,8 @@ public class Database {
 
             gameData.put(id, Arrays.asList(game_id, btn, btn_value, next_turn) );
         }
+
+        statement.close();
 
         if(gameData.isEmpty()){
             return null;
@@ -107,6 +112,7 @@ public class Database {
             playerData.put(id, Arrays.asList(playerX, playerO, winner, waitingOpponent));
         }
 
+        statement.close();
 
         if(playerData.isEmpty()){
             return null;
@@ -127,7 +133,7 @@ public class Database {
         prepState.setString(4, waitingOpponent);
 
         prepState.executeUpdate();
-
+        prepState.close();
     }
 
     // Update data in the "games" table.
@@ -142,7 +148,7 @@ public class Database {
         prepState.setInt(5, id);
 
         prepState.executeUpdate();
-
+        prepState.close();
     }
 
 }
