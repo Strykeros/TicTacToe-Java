@@ -104,9 +104,10 @@ public class App {
 
     // Create JPanel for the game
     private static void initGame(int gameId, int gridRows, int gridCols, JPanel panel, GridBagLayout gridLayout){
-        game = new JFrame("TicTacToe - " + playerName);
+        game = new JFrame("TicTacToe - player " + playerName);
         game.setResizable(false);
         game.setBounds(100, 100, 450, 650);
+        game.setLocationRelativeTo(null);
 
 
         turn = new PlayerTurn(playerName, gameId);
