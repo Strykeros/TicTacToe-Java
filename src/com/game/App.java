@@ -109,7 +109,6 @@ public class App {
         game.setBounds(100, 100, 450, 650);
         game.setLocationRelativeTo(null);
 
-
         turn = new PlayerTurn(playerName, gameId);
         menu = new SideMenu(panel);
         winner = new CheckWinner(panel, playerName);
@@ -144,7 +143,7 @@ public class App {
                 while (true){
 
                     syncData(db, panel, grid, gameId);
-                    Thread.sleep(500);
+                    Thread.sleep(200);
                 }
 
             } catch (SQLException | InterruptedException ex) {
@@ -162,7 +161,7 @@ public class App {
                 ((JButton) gridBtn).setText(savedBtnValue);
                 turn.checkTurn();
                 turn.getNextTurn();
-                ((JButton) gridBtn).repaint();
+                game.repaint();
 
                 grid.setGridLock(false);
                 syncWinAndDraw(savedBtnValue);
