@@ -109,7 +109,6 @@ public class CheckWinner {
 
             if(currentGameId == dbGameId){
                 dbValues.add(dbGameId + " " + playerData.get(keys.get(j)).toString().replace("[", "").replace("]", "").replace(",", ""));
-
             }
         }
 

@@ -132,25 +132,24 @@ public class Matchmaking {
 
         ArrayList<String> playerValuesArr = new ArrayList<>();
 
-        if (playerData != null){
+        if (playerData == null) return;
 
-            for (String key : playerData.keySet()){
-                playerValuesArr.add(key + " " + playerData.get(key).toString().replace("[", "").replace("]", "").replace(",", ""));
+        for (String key : playerData.keySet()){
+            playerValuesArr.add(key + " " + playerData.get(key).toString().replace("[", "").replace("]", "").replace(",", ""));
+        }
+
+        for (int i = 0; i < playerValuesArr.size(); i++){
+            String arrVal = playerValuesArr.get(i);
+            String[] convArr = arrVal.split(" ");
+
+            int id = Integer.parseInt(convArr[0]);
+            String playerX = convArr[1];
+            boolean isWaiting = Boolean.parseBoolean(convArr[4]);
+
+            if(Objects.equals(playerX, playerName) && isWaiting){
+                gameId = id;
             }
 
-            for (int i = 0; i < playerValuesArr.size(); i++){
-                String arrVal = playerValuesArr.get(i);
-                String[] convArr = arrVal.split(" ");
-
-                int id = Integer.parseInt(convArr[0]);
-                String playerX = convArr[1];
-                boolean isWaiting = Boolean.parseBoolean(convArr[4]);
-
-                if(Objects.equals(playerX, playerName) && isWaiting){
-                    gameId = id;
-                }
-
-            }
         }
     }
 

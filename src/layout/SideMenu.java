@@ -25,7 +25,6 @@ public class SideMenu {
 
     public SideMenu(JPanel panel){
         mainPanel = panel;
-
     }
 
     // Main function that initializes Label and leaderboard button
@@ -96,20 +95,20 @@ public class SideMenu {
         }
         else {
             if(Objects.equals(player, "X")){
-                String playr = getUsername("O");
+                String username = getUsername("O");
 
-                if(Objects.equals(playr, currentPlayer)){
+                if(Objects.equals(username, currentPlayer)){
                     turnTxt.setText("Your turn");
                 }else {
-                    turnTxt.setText(playr + "'s turn");
+                    turnTxt.setText(username + "'s turn");
                 }
 
             }else {
-                String playr = getUsername("X");
-                if(Objects.equals(playr, currentPlayer)){
+                String username = getUsername("X");
+                if(Objects.equals(username, currentPlayer)){
                     turnTxt.setText("Your turn");
                 }else {
-                    turnTxt.setText(playr + "'s turn");
+                    turnTxt.setText(username + "'s turn");
                 }
             }
         }
@@ -124,32 +123,28 @@ public class SideMenu {
 
         ArrayList<String> keys = new ArrayList<>(playerData.keySet());
 
-        if(playerData != null){
+        if (playerData == null) return null;
 
-            for (int j = 0; j < keys.size(); j++){
-                int dbGameId = Integer.parseInt(keys.get(j));
+        for (int j = 0; j < keys.size(); j++){
+            int dbGameId = Integer.parseInt(keys.get(j));
 
-                if(currentGameId == dbGameId){
-                    playerValuesArr.add(dbGameId + " " + playerData.get(keys.get(j)).toString().replace("[", "").replace("]", "").replace(",", ""));
+            if(currentGameId == dbGameId){
+                playerValuesArr.add(dbGameId + " " + playerData.get(keys.get(j)).toString().replace("[", "").replace("]", "").replace(",", ""));
 
-                }
             }
-            String arrayValue = playerValuesArr.get(playerValuesArr.size()-1);
-            String[] array = arrayValue.split(" ");
-
-            String playerX = array[1];
-            String playerO = array[2];
-
-
-            if(Objects.equals(player, "X")){
-                return playerX;
-            }else {
-                return playerO;
-            }
-
         }
+        String arrayValue = playerValuesArr.get(playerValuesArr.size()-1);
+        String[] array = arrayValue.split(" ");
 
-        return null;
+        String playerX = array[1];
+        String playerO = array[2];
+
+
+        if(Objects.equals(player, "X")){
+            return playerX;
+        }else {
+            return playerO;
+        }
     }
 
     // Change initial label text based on the player's turn
@@ -203,7 +198,7 @@ public class SideMenu {
 
     }
 
-    // Display the winners on the leaderboard
+    // Sort and display the winners on the leaderboard
     private void showGameData(HashMap<String, Integer> winners){
         String[] columns = {"Place", "Player", "Wins"};
 
@@ -214,10 +209,10 @@ public class SideMenu {
             dataList.add(record);
         });
 
-        Object[][] data = new Object[dataList.size()][];
-        dataList.toArray(data);
+        Object[][] dataArr = new Object[dataList.size()][];
+        dataList.toArray(dataArr);
 
-        Arrays.sort(data, new Comparator<Object[]>() {
+        Arrays.sort(dataArr, new Comparator<Object[]>() {
             @Override
             public int compare(Object[] arrA, Object[] arrB) {
                 Integer arrValA = (Integer) arrA[1];
@@ -226,14 +221,14 @@ public class SideMenu {
             }
         });
 
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; i < dataArr.length; i++) {
             String place = i + 1 + ".";
-            Object[] record = data[i];
+            Object[] record = dataArr[i];
             Object[] newRecord = {place, record[0], record[1]};
-            data[i] = newRecord;
+            dataArr[i] = newRecord;
         }
 
-        DefaultTableModel model = new DefaultTableModel(data, columns);
+        DefaultTableModel model = new DefaultTableModel(dataArr, columns);
         JTable table = new JTable(model);
 
         JOptionPane.showMessageDialog(null, new JScrollPane(table), "Leaderboard", JOptionPane.PLAIN_MESSAGE);

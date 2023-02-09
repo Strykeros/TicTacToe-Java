@@ -72,13 +72,13 @@ public class Database {
         ResultSet results = statement.executeQuery(selectData);
 
         while (results.next()){
-            String player = results.getString("id");
+            String id = results.getString("id");
             String game_id = results.getString("game_id");
             String btn = results.getString("clicked_btn");
             String btn_value = results.getString("btn_value");
             String next_turn = results.getString("next_turn");
 
-            gameData.put(player, Arrays.asList(game_id, btn, btn_value, next_turn) );
+            gameData.put(id, Arrays.asList(game_id, btn, btn_value, next_turn) );
         }
 
         if(gameData.isEmpty()){
