@@ -43,7 +43,7 @@ public class App {
     }
 
     // Synchronize the grid, turn, winner from the database
-    public static void syncData(Database database, JPanel appPanel, SideMenu menu, CheckWinner winner, Grid grid, PlayerTurn turn, int currentGameId) throws SQLException {
+    public static void syncData(Database database, JPanel appPanel, Grid grid, int currentGameId) throws SQLException {
 
         Component[] childs = appPanel.getComponents();
         HashMap<String, List<String>> dbData = database.getGameTurns();
@@ -142,7 +142,7 @@ public class App {
 
                 while (true){
 
-                    syncData(db, panel, menu, winner, grid, turn, gameId);
+                    syncData(db, panel, grid, gameId);
                     Thread.sleep(500);
                 }
 
